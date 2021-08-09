@@ -13,8 +13,8 @@ function Home() {
         <h1>Bienvenue sur le site.</h1>
         <p>Authentifiez-vous pour accéder au fonctionnalités.</p>
       </div>
-      {/* <SignUp />
-      <SignIn /> */}
+      <SignUp />
+      <SignIn />
     </div>
   );
 }
