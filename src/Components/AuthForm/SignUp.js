@@ -37,16 +37,15 @@ function SignUp() {
     }
 
     await signup(inputsRef.current[0].value, inputsRef.current[1].value);
-    // history.push('/loggedHome');
-
     dispatch({
       type: 'CLOSEMODAL',
     });
+    history.push('/loggedHome');
 
-    inputsRef.current.forEach((input) => {
-      input.value = '';
-    });
-    setError('');
+    // inputsRef.current.forEach((input) => {
+    //   input.value = '';
+    // });
+    // setError('');
   };
 
   return (
