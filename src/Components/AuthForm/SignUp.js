@@ -20,6 +20,12 @@ function SignUp() {
     });
   };
 
+  const toggleSignIn = () => {
+    dispatch({
+      type: 'TOGGLEIN',
+    });
+  };
+
   const inputsRef = useRef([]);
   const addInputs = (el) => {
     if (el && !inputsRef.current.includes(el)) {
@@ -36,16 +42,16 @@ function SignUp() {
       return;
     }
 
-    await signup(inputsRef.current[0].value, inputsRef.current[1].value);
-    dispatch({
-      type: 'CLOSEMODAL',
-    });
-    history.push('/loggedHome');
-
-    // inputsRef.current.forEach((input) => {
-    //   input.value = '';
-    // });
-    // setError('');
+    try {
+      await signup(inputsRef.current[0].value, inputsRef.current[1].value);
+      closeModal();
+      history.push('/loggedHome');
+    } catch (err) {
+      // console.log(err);
+      if (err.code === 'auth/email-already-in-use') {
+        setError("L'email est déja utilisé par un autre compte!");
+      }
+    }
   };
 
   return (
@@ -77,7 +83,9 @@ function SignUp() {
         <button onClick={closeModal} className="btn-close">
           X
         </button>
-        <p className="bottom-help-text">Vous avez déja un compte ?</p>
+        <p onClick={toggleSignIn} className="bottom-help-text">
+          Vous avez déja un compte ?
+        </p>
       </div>
     </div>
   );
