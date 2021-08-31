@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = (props) => {
   const [currentUser, setCurrentUser] = useState();
+  const [loading, setLoading] = useState(true);
 
   const signup = (email, password) => {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -22,6 +23,9 @@ export const AuthProvider = (props) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
+
+      // show the content only after settingCurrentUser
+      setLoading(false);
     });
 
     // cleanup function
@@ -30,7 +34,7 @@ export const AuthProvider = (props) => {
 
   return (
     <AuthContext.Provider value={{ currentUser, signup, login, logout }}>
-      {props.children}
+      {!loading && props.children}
     </AuthContext.Provider>
   );
 };
